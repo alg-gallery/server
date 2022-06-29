@@ -1,11 +1,56 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model comment {
+  commentid    Int      @id @default(autoincrement())
+  postid       Int
+  userid       String   @db.VarChar(20)
+  text         String   @db.VarChar(200)
+  comment_date DateTime @db.DateTime(0)
+  post         post     @relation(fields: [postid], references: [postid], onDelete: Cascade, onUpdate: NoAction, map: "c_1")
+  users        users    @relation(fields: [userid], references: [userid], onDelete: Cascade, onUpdate: NoAction, map: "c_2")
+
+  @@index([postid], map: "c_1")
+  @@index([userid], map: "c_2")
+}
+
+model likes {
+  postid Int
+  userid String @db.VarChar(20)
+  post   post   @relation(fields: [postid], references: [postid], onDelete: Cascade, onUpdate: NoAction, map: "l_1")
+  users  users  @relation(fields: [userid], references: [userid], onDelete: Cascade, onUpdate: NoAction, map: "l_2")
+
+  @@id([postid, userid])
+  @@index([userid], map: "l_2")
+}
+
+model post {
+  postid    Int       @id @default(autoincrement())
+  userid    String    @db.VarChar(20)
+  algCode   String    @db.VarChar(4000)
+  text      String?   @db.VarChar(1000)
+  tag1      String    @db.VarChar(50)
+  tag2      String    @db.VarChar(50)
+  tag3      String    @db.VarChar(50)
+  post_date DateTime  @db.DateTime(0)
+  users     users     @relation(fields: [userid], references: [userid], onDelete: Cascade, onUpdate: NoAction, map: "P_1")
+  comment   comment[]
+  likes     likes[]
+
+  @@index([userid], map: "P_1")
+}
+
+model users {
+  userid   String    @id @db.VarChar(20)
+  password String    @db.VarChar(200)
+  nickname String    @db.VarChar(20)
+  comment  comment[]
+  likes    likes[]
+  post     post[]
 }
