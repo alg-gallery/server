@@ -21,7 +21,7 @@ class CommentService {
         },
       },
     });
-    if (queryResult) {
+    if (!queryResult) {
       throw new Error("Error!!!");
     }
     return queryResult;

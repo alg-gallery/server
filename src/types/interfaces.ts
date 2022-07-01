@@ -3,3 +3,9 @@ export interface CommentBody {
   text: string;
   userid: string;
 }
+
+export interface UserBody {
+  userid: string;
+  password: string;
+  nickname: string;
+}
