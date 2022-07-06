@@ -5,6 +5,7 @@ import cors from "cors";
 
 import commentRouter from "./src/routes/comment";
 import userRouter from "./src/routes/user";
+import postRouter from "./src/routes/post";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors());
 
 app.use("/comment", commentRouter);
 app.use("/user", userRouter);
+app.use("/post", postRouter);
 
 app.use("/", (req: Request, res: Response) => {
   res.status(404).send("Anavailable route");

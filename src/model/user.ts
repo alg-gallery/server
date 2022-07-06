@@ -22,8 +22,33 @@ class UserService {
                 throw new Error("Error!!");
             }
             return queryResult;
-        } catch (error) {
+        } catch (err) {
             throw new Error("Error!!");
+        }
+    }
+
+    async checkout(userid: string, password: string) {
+        try {
+            const queryResult: any = await db.users.findUnique({
+                where: {
+                    userid,
+                },
+                select: {
+                    userid: true,
+                    password: true,
+                    nickname: true,
+                },
+            });
+            const hashed = queryResult?.password;
+            const result = await bcrypt.compare(password, hashed!);
+            if (result) {
+                const { userid, nickname } = queryResult;
+                return { userid, nickname };
+            } else {
+                return;
+            }
+        } catch (err) {
+            throw new Error("Error!!!");
         }
     }
 }

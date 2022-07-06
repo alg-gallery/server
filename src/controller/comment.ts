@@ -14,6 +14,7 @@ export async function selectReplyList(req: Request, res: Response) {
 export async function addReply(req: Request, res: Response) {
   try {
     const { body } = req;
+    console.log(body);
     const data = await commentService.create(body);
     res.status(200).json(data);
   } catch (err: any) {

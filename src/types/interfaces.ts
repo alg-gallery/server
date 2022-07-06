@@ -9,3 +9,17 @@ export interface UserBody {
   password: string;
   nickname: string;
 }
+
+export interface Payload {
+  userid: string;
+  nickname: string;
+}
+
+export interface PostBody {
+  algCode: string;
+  text: string;
+  tag1: string;
+  tag2: string;
+  tag3: string;
+  userid: string;
+}

@@ -28,7 +28,7 @@ class CommentService {
   }
   async create(body: CommentBody) {
     const { postid, text, userid } = body;
-    const commentDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+    const commentDate = moment(new Date()).toDate();
     const queryResult = await db.comment.create({
       data: {
         postid,

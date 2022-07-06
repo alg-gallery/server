@@ -1,9 +1,10 @@
 import express from "express";
-import { postData } from "../controller/uesr";
-import verifyToken from "../middlewares/auth";
+import { postData, refresh, signin } from "../controller/uesr";
 
 const router = express.Router();
 
-router.post("/", postData);
+router.post("/signup", postData);
+router.post("/signin", signin);
+router.post("/refresh", refresh);
 
 export default router;
