@@ -4,6 +4,9 @@ import morgan from "morgan";
 import cors from "cors";
 
 import commentRouter from "./src/routes/comment";
+import userRouter from "./src/routes/user";
+import postRouter from "./src/routes/post";
+import likeRouter from "./src/routes/like";
 
 const app = express();
 
@@ -13,6 +16,9 @@ app.use(helmet());
 app.use(cors());
 
 app.use("/comment", commentRouter);
+app.use("/user", userRouter);
+app.use("/post", postRouter);
+app.use("/like", likeRouter);
 
 app.use("/", (req: Request, res: Response) => {
   res.status(404).send("Anavailable route");

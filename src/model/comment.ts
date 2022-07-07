@@ -21,26 +21,31 @@ class CommentService {
         },
       },
     });
-    if (queryResult) {
+    if (!queryResult) {
       throw new Error("Error!!!");
     }
     return queryResult;
   }
   async create(body: CommentBody) {
-    const { postid, text, userid } = body;
-    const commentDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-    const queryResult = await db.comment.create({
-      data: {
-        postid,
-        text,
-        comment_date: commentDate,
-        userid,
-      },
-    });
-    if (!queryResult) {
+    try {
+      let { postid, text, userid } = body;
+      const commentDate: Date = moment(new Date()).toDate();
+      const queryResult = await db.comment.create({
+        data: {
+          postid: Number(postid),
+          text,
+          comment_date: commentDate,
+          userid,
+        },
+      });
+      if (!queryResult) {
+        throw new Error("Error!!");
+      }
+      return queryResult;
+    } catch (err: any) {
+      console.log(err);
       throw new Error("Error!!");
     }
-    return queryResult;
   }
   async remove(commentid: number) {
     const queryResult = await db.comment.delete({
