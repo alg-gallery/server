@@ -26,7 +26,7 @@ export default function verifyToken(req: Request, res: Response, next: NextFunct
                 next();
             }
         });
-    } catch (error) {
+    } catch (err: any) {
         res.status(401).send('Please authenticate');
     }
 }

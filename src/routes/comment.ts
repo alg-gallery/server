@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get("/:postid", selectReplyList);
 router.post("/", verifyToken, addReply);
-router.delete("/", verifyToken, removeReply);
+router.delete("/:commentid", verifyToken, removeReply);
 
 export default router;

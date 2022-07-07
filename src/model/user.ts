@@ -21,7 +21,7 @@ class UserService {
             if (!queryResult) {
                 throw new Error("Error!!");
             }
-            return queryResult;
+            return { userid, nickname };
         } catch (err) {
             throw new Error("Error!!");
         }
