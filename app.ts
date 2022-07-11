@@ -7,6 +7,7 @@ import commentRouter from "./src/routes/comment";
 import userRouter from "./src/routes/user";
 import postRouter from "./src/routes/post";
 import likeRouter from "./src/routes/like";
+import adminRouter from "./src/routes/admin";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/comment", commentRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/like", likeRouter);
+app.use("/admin", adminRouter);
 
 app.use("/", (req: Request, res: Response) => {
   res.status(404).send("Anavailable route");

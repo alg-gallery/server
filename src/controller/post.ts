@@ -21,8 +21,6 @@ export async function selectPostList_tag1(req: Request, res: Response) {
     try {
         const userid = req.body.userid as string;
         const tag1 = req.params.tag1 as string;
-        console.log(userid, tag1);
-        console.log("hi");
         let data;
         if (!userid) {
             data = await postservice.findMany_tag1(tag1);
@@ -38,7 +36,6 @@ export async function selectPostList_tag1(req: Request, res: Response) {
 export async function addPost(req: Request, res: Response) {
     try {
         const { body } = req;
-        console.log(body);
         const data = await mypostservice.create(body);
         res.status(200).json(data);
     } catch (err: any) {

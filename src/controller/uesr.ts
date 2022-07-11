@@ -14,15 +14,15 @@ export async function postData(req: Request, res: Response) {
 
 export async function signin(req: Request, res: Response) {
     try {
-        const { userid, nickname, password } = req.body;
-        const response = await userService.checkout(userid, password);
-        if (!response) {
+        const { userid, password } = req.body;
+        const user = await userService.checkout(userid, password);
+        if (!user) {
             res.status(401).json({ message: 'Incorrect userid or password' })
             return;
         }
-        const token = jwtUtil.token({ userid, nickname });
+        const token = jwtUtil.token(user);
         console.log(token);
-        res.status(200).json({ userid, nickname, token });
+        res.status(200).json({ user, token });
     } catch (err) {
         res.status(404).send('Incorrect userid or password');
     }
@@ -41,6 +41,16 @@ export async function refresh(req: Request, res: Response) {
         } else {
             res.sendStatus(401);
         }
+    } catch (err: any) {
+        res.status(500).send(err.toJSON ? err.toJSON() : null);
+    }
+}
+
+export async function removeUser(req: Request, res: Response) {
+    try {
+        const userid: string = req.params.userid
+        const data = await userService.remove(userid);
+        res.status(200).send(data);
     } catch (err: any) {
         res.status(500).send(err.toJSON ? err.toJSON() : null);
     }
