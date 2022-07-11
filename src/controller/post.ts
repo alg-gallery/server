@@ -49,7 +49,6 @@ export async function addPost(req: Request, res: Response) {
 export async function removePost(req: Request, res: Response) {
     try {
         const postid = parseInt(req.params.postid as string);
-        const userid = req.body.postid;
         const data = await mypostservice.remove(postid);
         res.status(200).json(data);
     } catch (err: any) {
