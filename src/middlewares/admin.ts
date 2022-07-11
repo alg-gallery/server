@@ -21,8 +21,13 @@ export default function verifyToken(req: Request, res: Response, next: NextFunct
             if (err) {
                 res.status(401).send('Refresh your token');
             } else {
-                req.body.userid = decoded.userid;
-                next();
+                const userid = decoded.userid;
+                if (userid != "admin") {
+                    res.status(401).send('Who Are You?');
+                } else {
+                    req.body.userid = userid;
+                    next();
+                }
             }
         });
     } catch (err: any) {

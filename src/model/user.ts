@@ -41,15 +41,33 @@ class UserService {
             });
             const hashed = queryResult?.password;
             const result = await bcrypt.compare(password, hashed!);
+            let admin: boolean;
+            if (userid == "admin") {
+                admin = true;
+            } else {
+                admin = false;
+            }
             if (result) {
                 const { userid, nickname } = queryResult;
-                return { userid, nickname };
+                return { userid, nickname, admin };
             } else {
                 return;
             }
         } catch (err) {
             throw new Error("Error!!!");
         }
+    }
+
+    async remove(userid: string) {
+        const queryResult = await db.users.delete({
+            where: {
+                userid,
+            },
+        });
+        if (!queryResult) {
+            throw new Error("Error!!!");
+        }
+        return queryResult;
     }
 }
 
