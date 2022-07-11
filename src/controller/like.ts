@@ -6,8 +6,9 @@ export async function selectLike(req: Request, res: Response) {
     try {
         const postid = parseInt(req.params.postid as string);
         let data;
-        if (auth.isAuth(req)) {
-            const userid: string = auth.userid(req)!;
+        if (Boolean(auth.isAuth(req))) {
+            auth.userid(req);
+            const userid: string = req.body.userid;
             data = await mylikeservice.count_auth(userid, postid);
         } else {
             data = await mylikeservice.count_nonAuth(postid);

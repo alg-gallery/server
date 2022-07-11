@@ -9,7 +9,7 @@ export interface CustomRequest extends Request {
 }
 
 class Auth {
-    isAuth(req: Request) {
+    isAuth(req: Request): boolean {
         try {
             const token = req.header('Authorization')?.replace('Bearer ', '');
 
@@ -19,11 +19,10 @@ class Auth {
                 jwt.verify(token, ACCESS_TOKEN_KEY, (err: any, decoded: any) => {
                     if (err) {
                         return false;
-                    } else {
-                        return true;
                     }
                 });
             }
+            return true;
         } catch (err: any) {
             throw new Error("error!!!");
         }
@@ -37,7 +36,7 @@ class Auth {
                 if (err) {
                     throw new Error("error!!!");
                 } else {
-                    return decoded.userid;
+                    return req.body.userid = decoded.userid;
                 }
             });
         } catch (err: any) {
